@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { WeatherCard } from './WeatherCard';
 import { ForecastCard } from './Forecast';
-import styles from '../Pages/styles.module.css';
+import styles from '../Pages/Styles.module.css';
 
 const Home = () => {
     const [location, setLocation] = useState('');

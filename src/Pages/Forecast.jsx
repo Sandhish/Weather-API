@@ -1,4 +1,4 @@
-import styles from '../Pages/styles.module.css';
+import styles from '../Pages/Styles.module.css';
 
 const ForecastCard = ({ data }) => {
     return (
