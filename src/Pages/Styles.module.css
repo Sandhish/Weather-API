@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url('bg.jpg');
+  background-image: url('/bg.jpg');
   padding: 20px;
 }
 

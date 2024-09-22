@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { WeatherCard } from './WeatherCard';
 import { ForecastCard } from './Forecast';
-import styles from './Styles.module.css';
+import styles from './styles.module.css';
 
 const Home = () => {
     const [location, setLocation] = useState('');
@@ -20,16 +20,16 @@ const Home = () => {
 
     const fetchWeather = async (loc) => {
         try {
-            const currentWeather = await axios.get(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${loc}`);
-            const forecast = await axios.get(`http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${loc}&days=3`);
+            const currentWeather = await axios.get(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${loc}`);
+            const forecast = await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${loc}&days=3`);
             setWeatherData(currentWeather.data);
             setForecastData(forecast.data.forecast.forecastday);
 
             const yesterday = getFormattedDate(-1);
             const dayBeforeYesterday = getFormattedDate(-2);
 
-            const historyDay1 = await axios.get(`http://api.weatherapi.com/v1/history.json?key=${apiKey}&q=${loc}&dt=${yesterday}`);
-            const historyDay2 = await axios.get(`http://api.weatherapi.com/v1/history.json?key=${apiKey}&q=${loc}&dt=${dayBeforeYesterday}`);
+            const historyDay1 = await axios.get(`https://api.weatherapi.com/v1/history.json?key=${apiKey}&q=${loc}&dt=${yesterday}`);
+            const historyDay2 = await axios.get(`https://api.weatherapi.com/v1/history.json?key=${apiKey}&q=${loc}&dt=${dayBeforeYesterday}`);
 
             setHistoryData([historyDay2.data.forecast.forecastday[0], historyDay1.data.forecast.forecastday[0]]);
         } catch (error) {
