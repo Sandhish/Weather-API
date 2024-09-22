@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import WeatherCard from '../../Pages/WeatherCard';
-import ForecastCard from '../../Pages/Forecast';
+import { WeatherCard } from './WeatherCard';
+import { ForecastCard } from './Forecast';
+import styles from './Styles.module.css';
 
 const Home = () => {
     const [location, setLocation] = useState('');
@@ -51,32 +52,29 @@ const Home = () => {
     }, []);
 
     return (
-        <div className="app">
-            <h1>Weather App</h1>
+        <div className={styles.Main}>
+        <h1 className={styles.heading}>Weather App</h1>
 
-            <form onSubmit={handleSearch}>
-                <input type="text" placeholder="Enter location" value={location} onChange={(e) => setLocation(e.target.value)} />
-                <button type="submit">Search</button>
-            </form>
+        <form onSubmit={handleSearch} className={styles.form}>
+            <input type="text" className={styles.inputBox} placeholder="Enter location" value={location} onChange={(e) => setLocation(e.target.value)} />
+            <button type="submit" className={styles.searchBtn}>Search</button>
+        </form>
 
-            {weatherData && (
-                <>
-                    <WeatherCard data={weatherData} />
+        {weatherData && (
+            <>
+                <WeatherCard data={weatherData} />
 
-                    <div className="forecast-container">
-                        {historyData && historyData.map((day, index) => (
-                            <ForecastCard key={index} data={day} />
-                        ))}
-                    </div>
-
-                    <div className="forecast-container">
-                        {forecastData && forecastData.slice(0, 3).map((day, index) => (
-                            <ForecastCard key={index} data={day} />
-                        ))}
-                    </div>
-                </>
-            )}
-        </div>
+                <div className={styles.forecastContainer}>
+                    {historyData && historyData.map((day, index) => (
+                        <ForecastCard key={index} data={day} />
+                    ))}
+                    {forecastData && forecastData.slice(0, 3).map((day, index) => (
+                        <ForecastCard key={index} data={day} />
+                    ))}
+                </div>
+            </>
+        )}
+    </div>
     );
 };
 
