@@ -3,31 +3,54 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-image: url('/bg.jpg');
-  padding: 20px;
+  padding: 30px;
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.backgroundImage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* filter: blur(1px); */
+  z-index: -1;
 }
 
 .heading {
-  color: #333;
+  color: #fff;
+  text-shadow: 4px 4px 14px rgba(0, 0, 0, 0.9);
   font-size: 2.5rem;
+  align-self: start;
   margin-bottom: 30px;
+  margin-left: 20px;
 }
 
 .form {
   display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  width: 100%;
+  position: absolute;
+  top: 38px;
+  right: 45px;
 }
 
 .inputBox {
   padding: 10px 15px;
   border: 1px solid #ccc;
   border-radius: 30px;
-  margin-right: 10px;
-  width: 250px;
+  width: 190px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   font-size: 1rem;
+  margin-right: 3px;
+  transition: all 0.3s ease;
+}
+
+.inputBox:focus {
+  outline: none;
+  border-color: #4a90e2;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .searchBtn {
@@ -36,13 +59,15 @@
   color: white;
   border: none;
   border-radius: 30px;
+  margin-left: 10px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: .8rem;
   transition: background-color 0.3s ease;
 }
 
 .searchBtn:hover {
-  background-color: #357abd;
+  background-color: rgb(82, 82, 230);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .weatherCard {
@@ -54,22 +79,24 @@
   width: 80%;
   max-width: 800px;
   text-align: center;
-  margin-bottom: 30px;
-  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 30px rgba(227, 228, 237, 0.4);
   background-size: cover;
   background-position: center;
-  color: white;
+  color: rgb(255, 255, 255);
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(225, 225, 225, 0.18)
 }
 
 .locName {
   font-size: 2rem;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   color: #fff;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .temp {
-  font-size: 3.5rem;
+  font-size: 2.5rem;
   margin-bottom: 15px;
   font-weight: bold;
   color: #fff;
@@ -82,31 +109,32 @@
   font-size: 1.2rem;
   margin: 5px 0;
   color: #f0f0f0;
-  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
 }
 
 .weatherIcon {
   width: 100px;
   height: 100px;
-  margin: 20px 0 0 0;
 }
 
 .forecastContainer {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
+  width: 100%;
+  max-width: 1200px;
   margin-top: 30px;
-  width: 90%;
-  max-width: 1000px;
 }
 
 .forecastCard {
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.85);
   padding: 15px;
   border-radius: 20px;
-  width: 240px;
   text-align: center;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .forecastCard img {
@@ -125,5 +153,64 @@
 .conditionText {
   font-size: 1rem;
   margin: 5px 0;
-  color: #555;
+  color: #454444;
+}
+
+@media (max-width: 1024px) {
+  .form {
+    position: static;
+    margin-bottom: 20px;
+  }
+
+  .forecastContainer {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+
+  .inputBox {
+    width: 200px;
+  }
+
+  .searchBtn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+  }
+
+  .weatherCard {
+    width: 90%;
+  }
+}
+
+@media (max-width: 768px) {
+  .heading {
+    font-size: 2rem;
+    margin-left: 10px;
+  }
+
+  .inputBox {
+    width: 180px;
+  }
+
+  .forecastContainer {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .heading {
+    margin-left: 0;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    font-size: 2.2rem;
+    align-self: center;
+  }
+
+  .inputBox {
+    width: 150px;
+    margin-right: 0;
+  }
+
+  .searchBtn {
+    padding: 10px;
+    font-size: 0.8rem;
+  }
 }

@@ -53,28 +53,29 @@ const Home = () => {
 
     return (
         <div className={styles.Main}>
-        <h1 className={styles.heading}>Weather App</h1>
+            <img src="/R.jpeg" alt="background" className={styles.backgroundImage} />
+            <h1 className={styles.heading}>Weather App</h1>
 
-        <form onSubmit={handleSearch} className={styles.form}>
-            <input type="text" className={styles.inputBox} placeholder="Enter location" value={location} onChange={(e) => setLocation(e.target.value)} />
-            <button type="submit" className={styles.searchBtn}>Search</button>
-        </form>
+            <form onSubmit={handleSearch} className={styles.form}>
+                <input type="text" className={styles.inputBox} placeholder="Enter location" value={location} onChange={(e) => setLocation(e.target.value)} />
+                <button type="submit" className={styles.searchBtn}>Search</button>
+            </form>
 
-        {weatherData && (
-            <>
-                <WeatherCard data={weatherData} />
+            {weatherData && (
+                <>
+                    <WeatherCard data={weatherData} />
 
-                <div className={styles.forecastContainer}>
-                    {historyData && historyData.map((day, index) => (
-                        <ForecastCard key={index} data={day} />
-                    ))}
-                    {forecastData && forecastData.slice(0, 3).map((day, index) => (
-                        <ForecastCard key={index} data={day} />
-                    ))}
-                </div>
-            </>
-        )}
-    </div>
+                    <div className={styles.forecastContainer}>
+                        {historyData && historyData.map((day, index) => (
+                            <ForecastCard key={index} data={day} />
+                        ))}
+                        {forecastData && forecastData.slice(0, 3).map((day, index) => (
+                            <ForecastCard key={index} data={day} />
+                        ))}
+                    </div>
+                </>
+            )}
+        </div>
     );
 };
 
