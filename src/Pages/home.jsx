@@ -3,12 +3,15 @@ import axios from 'axios';
 import { WeatherCard } from './WeatherCard';
 import { ForecastCard } from './Forecast';
 import styles from '../Pages/Styles.module.css';
+import { ErrorPage } from './ErrorPage';
 
 const Home = () => {
     const [location, setLocation] = useState('');
     const [weatherData, setWeatherData] = useState(null);
     const [forecastData, setForecastData] = useState(null);
     const [historyData, setHistoryData] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(false);
 
     const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -19,6 +22,9 @@ const Home = () => {
     };
 
     const fetchWeather = async (loc) => {
+        setLoading(true);
+        setError(false);
+
         try {
             const currentWeather = await axios.get(`https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${loc}`);
             const forecast = await axios.get(`https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${loc}&days=3`);
@@ -32,8 +38,16 @@ const Home = () => {
             const historyDay2 = await axios.get(`https://api.weatherapi.com/v1/history.json?key=${apiKey}&q=${loc}&dt=${dayBeforeYesterday}`);
 
             setHistoryData([historyDay2.data.forecast.forecastday[0], historyDay1.data.forecast.forecastday[0]]);
+            setLocation('');
         } catch (error) {
             console.error('Error fetching weather data:', error);
+            if (error.response && error.response.status === 400) {
+                setError(true);
+            }
+        } finally {
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
         }
     };
 
@@ -42,6 +56,10 @@ const Home = () => {
         if (location) {
             fetchWeather(location);
         }
+    };
+
+    const handleCloseModal = () => {
+        setError(false);
     };
 
     useEffect(() => {
@@ -54,14 +72,31 @@ const Home = () => {
     return (
         <div className={styles.Main}>
             <img src="/R.jpeg" alt="background" className={styles.backgroundImage} />
-            <h1 className={styles.heading}>Weather App</h1>
+            {!loading && <h1 className={styles.heading}>Weather App</h1>}
 
             <form onSubmit={handleSearch} className={styles.form}>
-                <input type="text" className={styles.inputBox} placeholder="Enter location" value={location} onChange={(e) => setLocation(e.target.value)} />
+                <input type="text" className={styles.inputBox} placeholder="Enter location"
+                    value={location} onChange={(e) => setLocation(e.target.value)}
+                />
                 <button type="submit" className={styles.searchBtn}>Search</button>
             </form>
 
-            {weatherData && (
+            {loading && (
+                <div className={styles.spinnerOverlay}>
+                    <div className={styles.loader}>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+            )}
+
+            {!loading && error && (
+                <ErrorPage show={error} onClose={handleCloseModal} />
+            )}
+
+            {!loading && !error && weatherData && (
                 <>
                     <WeatherCard data={weatherData} />
 
